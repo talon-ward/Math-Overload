@@ -1,0 +1,365 @@
+<?php
+
+// global constants
+$DOMAIN_CONCEPTS = 1;
+$DOMAIN_COURSES = 2;
+$DOMAIN_EXERCISES = 4;
+$DOMAIN_NOTES = 8;
+$DOMAIN_PREREQS = 16;
+$DOMAIN_QUESTIONS = 32;
+
+// Functions:
+// rebuildSearch() - rebuild search tables
+// searchDB($domain, $tokens) - returns array { $resultInfo[0] (domain), $resultInfo[1] (id), $description}
+
+// includes
+require_once('utility.php');
+require_once('databaseConnection.php');
+
+
+
+// function: rebuild search tables
+function rebuildSearch() {
+ global $dbConnection;
+ global $DOMAIN_CONCEPTS;
+ global $DOMAIN_COURSES;
+ global $DOMAIN_EXERCISES;
+ global $DOMAIN_NOTES;
+ global $DOMAIN_PREREQS;
+ global $DOMAIN_QUESTIONS;
+
+ // Clear current records
+ $result = mysqli_query($dbConnection, "TRUNCATE TABLE searchtokens");
+ $result = mysqli_query($dbConnection, "TRUNCATE TABLE searchconcepts");
+ $result = mysqli_query($dbConnection, "TRUNCATE TABLE searchcourses");
+ $result = mysqli_query($dbConnection, "TRUNCATE TABLE searchexercises");
+ $result = mysqli_query($dbConnection, "TRUNCATE TABLE searchnotes");
+ $result = mysqli_query($dbConnection, "TRUNCATE TABLE searchprereqs");
+ $result = mysqli_query($dbConnection, "TRUNCATE TABLE searchquestions");
+
+ // Gather concept data from questions and correct answers
+ $result = mysqli_query($dbConnection, "SELECT conceptID FROM conceptnotes");
+ while($row = mysqli_fetch_row($result)) { // use conceptnotes to list concepts
+  $conceptID = $row[0];
+  $result2 = mysqli_query($dbConnection, "SELECT questionText, answer FROM questions WHERE conceptID='$conceptID'");
+  while($row2 = mysqli_fetch_row($result2)) {
+   foreach(tokenize($row2[0]) as $token) {
+    incrementToken($dbConnection, $token, $conceptID, $DOMAIN_CONCEPTS);
+   }
+   foreach(tokenize($row2[1]) as $token) {
+    incrementToken($dbConnection, $token, $conceptID, $DOMAIN_CONCEPTS);
+   }
+  }
+ }
+
+ // Gather course data from descriptions
+ $result = mysqli_query($dbConnection, "SELECT courseID, courseName, courseDescription FROM courses");
+ while($row = mysqli_fetch_row($result)) { // use conceptnotes to list concepts
+  $courseID = $row[0];
+  $courseName = $row[1];
+  $courseDescription = $row[2];
+  foreach(tokenize($courseName) as $token) {
+   incrementToken($dbConnection, $token, $courseID, $DOMAIN_COURSES);
+  }
+  foreach(tokenize($courseDescription) as $token) {
+   incrementToken($dbConnection, $token, $courseID, $DOMAIN_COURSES);
+  }
+ }
+
+ // Gather exercise data from descriptions, problem files, and solutions files
+ $result = mysqli_query($dbConnection, "SELECT exerciseID, description FROM exercises");
+ while($row = mysqli_fetch_row($result)) { // use conceptnotes to list concepts
+  $exerciseID = $row[0];
+  $description = $row[1];
+  $problem = file_get_contents("exercises/problems/$exerciseID.html");
+  $solution = file_get_contents("exercises/solutions/$exerciseID.html");
+  foreach(tokenize($description) as $token) {
+   incrementToken($dbConnection, $token, $exerciseID, $DOMAIN_EXERCISES);
+  }
+  if(!($problem === false)) {
+   foreach(tokenize($problem) as $token) {
+    incrementToken($dbConnection, $token, $exerciseID, $DOMAIN_EXERCISES);
+   }
+  }
+  if(!($solution == false)) {
+   foreach(tokenize($solution) as $token) {
+    incrementToken($dbConnection, $token, $exerciseID, $DOMAIN_EXERCISES);
+   }
+  }
+ }
+
+ // Gather note data from names, files
+ $result = mysqli_query($dbConnection, "SELECT noteID, noteName FROM notes");
+ while($row = mysqli_fetch_row($result)) {
+  $noteID = $row[0];
+  $noteName = $row[1];
+  $note = file_get_contents("notes/$noteID.html");
+  foreach(tokenize($noteName) as $token) {
+   incrementToken($dbConnection, $token, $noteID, $DOMAIN_NOTES);
+  }
+  if(!($note === false)) {
+   foreach(tokenize($note) as $token) {
+    incrementToken($dbConnection, $token, $noteID, $DOMAIN_NOTES);
+   }
+  }
+ }
+
+ // No need for prereq data
+
+ // Gather question data from questions, answers
+ $result = mysqli_query($dbConnection, "SELECT questionID, questionText, answer FROM questions");
+ while($row = mysqli_fetch_row($result)) {
+  $questionID = $row[0];
+  $questionText = $row[1];
+  $answer = $row[2];
+  foreach(tokenize($questionText) as $token) {
+   incrementToken($dbConnection, $token, $questionID, $DOMAIN_QUESTIONS);
+  }
+  foreach(tokenize($answer) as $token) {
+   incrementToken($dbConnection, $token, $questionID, $DOMAIN_QUESTIONS);
+  }
+ }
+ 
+}
+
+
+
+// function: used by rebuildSearch(), not for direct use
+function incrementToken($dbConnection, $token, $id, $domain) {
+ global $DOMAIN_CONCEPTS;
+ global $DOMAIN_COURSES;
+ global $DOMAIN_EXERCISES;
+ global $DOMAIN_NOTES;
+ global $DOMAIN_PREREQS;
+ global $DOMAIN_QUESTIONS;
+
+ if($token == "") {
+  return;
+ }
+
+ $token = strtolower(stringClean($token));
+
+ // Update searchtokens table
+ $result = mysqli_query($dbConnection, "SELECT tokenID, count FROM searchtokens WHERE token='$token'");
+ if($result && mysqli_num_rows($result) > 0) { // success
+  $row = mysqli_fetch_row($result);
+  $tokenID = $row[0];
+  $count = $row[1] + 1;
+  // update token count
+  $result2 = mysqli_query($dbConnection, "UPDATE searchtokens SET count='$count' WHERE tokenID='$tokenID'");
+ } else { // create new entry
+  $result2 = mysqli_query($dbConnection, "INSERT INTO searchtokens (token, count) VALUES ('$token', '1')");
+  $tokenID = mysqli_insert_id($dbConnection);
+ }
+
+ // Update domain table
+ switch($domain) {
+  case $DOMAIN_CONCEPTS:
+   $idName = "conceptID";
+   $tableName = "searchconcepts";
+   break;
+  case $DOMAIN_COURSES:
+   $idName = "courseID";
+   $tableName = "searchcourses";
+   break;
+  case $DOMAIN_EXERCISES:
+   $idName = "exerciseID";
+   $tableName = "searchexercises";
+   break;
+  case $DOMAIN_NOTES:
+   $idName = "noteID";
+   $tableName = "searchnotes";
+   break;
+  case $DOMAIN_PREREQS:
+   $idName = "prereqID";
+   $tableName = "searchprereqs";
+   break;
+  case $DOMAIN_QUESTIONS:
+   $idName = "questionID";
+   $tableName = "searchquestions";
+   break;
+ }
+ $result = mysqli_query($dbConnection, "SELECT count FROM $tableName WHERE tokenID='$tokenID' AND $idName='$id'");
+ if($result && mysqli_num_rows($result) > 0) { // success
+  $row = mysqli_fetch_row($result);
+  $count = $row[0] + 1;
+  // update token count
+  $result2 = mysqli_query($dbConnection, "UPDATE $tableName SET count='$count' WHERE tokenID='$tokenID' AND $idName='$id'");
+ } else { // create new entry
+  $result2 = mysqli_query($dbConnection, "INSERT INTO $tableName (tokenID, $idName, count) VALUES ('$tokenID', '$id', '1')");
+ }
+}
+
+
+
+// function: returns array {{ $resultInfo[0] (domain), $resultInfo[1] (id) } => $description}
+function searchDB($domain, $tokens) {
+ global $dbConnection;
+ global $DOMAIN_CONCEPTS;
+ global $DOMAIN_COURSES;
+ global $DOMAIN_EXERCISES;
+ global $DOMAIN_NOTES;
+ global $DOMAIN_PREREQS;
+ global $DOMAIN_QUESTIONS;
+
+ $domains = array($DOMAIN_CONCEPTS, $DOMAIN_COURSES, $DOMAIN_EXERCISES, $DOMAIN_NOTES, $DOMAIN_PREREQS, $DOMAIN_QUESTIONS);
+
+ $searchResults = array();
+
+ // Find top 5 concepts from each category for each token
+ $tokenData = array();
+ $searchIDs = array();
+ foreach($tokens as $token) {
+
+  $token = strtolower(stringClean($token));
+
+  // Get token info
+  $result = mysqli_query($dbConnection, "SELECT tokenID, count FROM searchtokens WHERE token='$token'");
+  if($result) { // success
+   $row = mysqli_fetch_row($result);
+   $tokenID = $row[0];
+   $totalCount = $row[1];
+   $tokenData[] = array($tokenID, $totalCount);
+  }
+
+   foreach($domains as $domainTest) {
+   // Check domainTest
+   if($domain & $domainTest) {
+    switch($domainTest) {
+     case $DOMAIN_CONCEPTS:
+      $idName = "conceptID";
+      $tableName = "searchconcepts";
+      break;
+     case $DOMAIN_COURSES:
+      $idName = "courseID";
+      $tableName = "searchcourses";
+      break;
+     case $DOMAIN_EXERCISES:
+      $idName = "exerciseID";
+      $tableName = "searchexercises";
+      break;
+     case $DOMAIN_NOTES:
+      $idName = "noteID";
+      $tableName = "searchnotes";
+      break;
+     case $DOMAIN_PREREQS:
+      $idName = "prereqID";
+      $tableName = "searchprereqs";
+      break;
+     case $DOMAIN_QUESTIONS:
+      $idName = "questionID";
+      $tableName = "searchquestions";
+      break;
+    }
+    // Retrieve top five counts
+    $result = mysqli_query($dbConnection, "SELECT $idName FROM $tableName WHERE tokenID='$tokenID' ORDER BY count DESC LIMIT 10");
+    while($row = mysqli_fetch_row($result)) { // for each row
+     $id = $row[0];
+     if($id == "") { // I don't know why this needs to be here, but it does.
+      continue;
+     }
+     // append to array if new
+     for($i = 0; $i < sizeof($searchIDs); ++$i) {
+      if($searchIDs[$i][0] == $domainTest && $searchIDs[$i][1] == $id) {
+       continue 2;
+      }
+     }
+     $searchIDs[] = array($domainTest, $id, 0); // domain, id, relevance
+    }
+   }
+  }
+ }
+
+// Find weights for each search ID
+ $searchData = array();
+ foreach($searchIDs as &$searchID) { // allow modification
+  switch($searchID[0]) { // check domain for search item
+   case $DOMAIN_CONCEPTS:
+    $tableName = "searchconcepts";
+    break;
+   case $DOMAIN_COURSES:
+    $tableName = "searchcourses";
+    break;
+   case $DOMAIN_EXERCISES:
+    $tableName = "searchexercises";
+    break;
+   case $DOMAIN_NOTES:
+    $tableName = "searchnotes";
+    break;
+   case $DOMAIN_PREREQS:
+    $tableName = "searchprereqs";
+    break;
+   case $DOMAIN_QUESTIONS:
+    $tableName = "searchquestions";
+    break;
+  }
+  foreach($tokenData as $tokenDatum) { // get count for each token
+   $tokenID = $tokenDatum[0];
+   $totalCount = $tokenDatum[1];
+   $result = mysqli_query($dbConnection, "SELECT count FROM $tableName WHERE tokenID='$tokenID'");
+   if($result) { // success
+    $row = mysqli_fetch_row($result);
+    $count = $row[0];
+    if($totalCount != 0) {
+     $searchID[2] += $count*$count/$totalCount/$totalCount;
+    }
+   }
+  }
+ }
+
+// Sort search results by relevance
+ usort($searchIDs, function($a, $b) { if ($a[2] == $b[2]) { return 0; } return ($a[2] < $b[2]) ? 1 : -1; });
+
+// Return up to 10 results
+ $end = 10 < sizeof($searchIDs) ? 10 : sizeof($searchIDs);
+ for($i = 0; $i < $end; ++$i) {
+  $rDomain = $searchIDs[$i][0];
+  $rID = $searchIDs[$i][1];
+  // Generate description.
+  switch($rDomain) {
+   case $DOMAIN_CONCEPTS:
+    $result = mysqli_query($dbConnection, "SELECT questionText FROM questions WHERE conceptID='$rID' LIMIT 1");
+    if($row = mysqli_fetch_row($result)) {
+     $description = $row[0];
+    } else {
+     $description = "$rID";
+    }
+    break;
+   case $DOMAIN_COURSES:
+    $result = mysqli_query($dbConnection, "SELECT courseName, courseDescription FROM courses WHERE courseID='$rID'");
+    if($row = mysqli_fetch_row($result)) {
+     $description = $row[0] . ": " . $row[1];
+    } else {
+     $description = "$rID";
+    }
+    break;
+   case $DOMAIN_EXERCISES:
+    $result = mysqli_query($dbConnection, "SELECT description FROM exercises WHERE exerciseID='$rID'");
+    if($row = mysqli_fetch_row($result)) {
+     $description = $row[0];
+    } else {
+     $description = "ID Number: $rID";
+    }
+    break;
+   case $DOMAIN_NOTES:
+    $result = mysqli_query($dbConnection, "SELECT noteName FROM notes WHERE noteID='$rID'");
+    if($row = mysqli_fetch_row($result)) {
+     $description = $row[0];
+    } else {
+     $description = "ID Number: $rID";
+    }
+    break;
+   case $DOMAIN_PREREQS:
+    $description = "$rID";
+    break;
+   case $DOMAIN_QUESTIONS:
+    $description = "$rID";
+    break;
+  }
+  $searchResults[] = array($rDomain, $rID, $description);
+ }
+
+ return $searchResults;
+}
+
+?>

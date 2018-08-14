@@ -1,0 +1,62 @@
+<?php
+
+// Sets global variables $isLoggedIn and $userID.
+//
+// Functions:
+// forceLogin($page) - if user not logged in, redirects to log in page, which redirects to $page after successfully logging in.
+
+// include utility functions
+require_once('utility.php');
+require_once('databaseConnection.php');
+
+// start php session
+session_start();
+
+// global logged in status variable
+$isLoggedIn = 0;
+if(isset($_SESSION['USER']) && (trim($_SESSION['USER']) != '')) {
+ $isLoggedIn = 1;
+}
+
+// attempt cookie log in if no session
+if($isLoggedIn == 0 && isset($_COOKIE['username']) && isset($_COOKIE['cookiepass'])) {
+ global $dbConnection;
+ $uname = stringClean($_COOKIE['username']); // protect database
+ $cpass = stringClean($_COOKIE['cookiepass']); // from dirty strings
+ echo "User: $uname<br />Pass: $cpass<br />";
+ die();
+ $result = mysqli_query($dbConnection, "SELECT userID FROM users WHERE userName='$uname' AND cookiePassword='$cpass'");
+ if($result && mysqli_num_rows($result) > 0) { // success
+  $uID = mysqli_fetch_row($result);
+  session_regenerate_id();
+  $_SESSION['USER'] = $uname;
+  $_SESSION['USERID'] = $uID[0];
+
+  // refresh and regenerate cookie information
+  //$cpass = randomAlphanumeric(64); // generate cookie password
+  //$expire = time() + 2592000; // good for one month
+  //setcookie('username', $uname, $expire); // remember me
+  //setcookie('cookiepass', $cpass, $expire);
+  //mysqli_query($dbConnection, "UPDATE users SET cookiePassword='$cpass' WHERE userName='$uname'");
+
+  $isLoggedIn = 1;
+ }
+}
+
+
+// set global userID variable
+if($isLoggedIn == 1) {
+ $userID = $_SESSION['USERID'];
+}
+
+// function: force user to login
+function forceLogin($page) {
+ global $isLoggedIn;
+ if($isLoggedIn != 1) {
+  setcookie('loginRedirect', $page, time() + 300);
+  echo "<meta http-equiv=\"Refresh\" content=\"0; URL=signin.php\" \>\n";
+  die();
+ }
+}
+
+?>

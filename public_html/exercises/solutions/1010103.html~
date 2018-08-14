@@ -1,0 +1,7 @@
+We must check that $d(x, y) = \sqrt{|x - y|}$ satisfies the three conditions of a distance function:
+<ul>
+ <li /> If $x = y$, then $\sqrt{|x - y|} = 0$. If $\sqrt{x - y} = 0$, then $x - y = 0$, so that $x = y$.
+ <li /> We have $d(x, y) = \sqrt{|x - y|} = \sqrt{|y - x|} = d(y, x)$.
+ <li /> Since $d(x, y)^2 = |x - y| = |x - z + z - y| \leq |x - z| + |z - y|$, for all $z \in \mathbb{R}$, it follows that $d(x, y)^2 \leq |x - z| + 2\sqrt{|x - z|}\sqrt{|z - y|} + |z - y| = (\sqrt{|x - z|} + \sqrt{|z - y|})^2$, so that, by taking the square root of both sides, we have $d(x, y) \leq \sqrt{|x - z|} + \sqrt{|z - y|} = d(x, z) + d(z, y)$.
+</ul>
+Because $d(x, y) = \sqrt{|x - y|}$ satisfies the conditions of a distance function, $d$ is a metric on $\mathbb{R}$.

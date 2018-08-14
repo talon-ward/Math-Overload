@@ -1,0 +1,15 @@
+The metric on the sequence space $l^\infty$ is $d(x, y) = \mathrm{sup}_{i \in \mathbb{N}} |x_i - y_i|$, where $x = (x_1, x_2, \ldots)$ and $y = (y_1, y_2, \ldots)$. Let $z = (z_1, z_2, \ldots) \in l^\infty$. For each $i \in \mathbb{N}$, we have<br /><br />
+
+<center>$|x_i - y_i| = |x_i - z_i + z_i - y_i| \leq |x_i - z_i| + |z_i - y_i|</center><br />
+
+Taking the supremum on both sides, we have<br /><br />
+<center>
+$\begin{array}{rcl}
+  d(x, y) & =    & \mathrm{sup}_{i \in \mathbb{N}} |x_i - y_i| \\
+          & \leq & \mathrm{sup}_{i \in \mathbb{N}} \left( |x_i - z_i| + |z_i - y_i| \right) \\
+          & \leq & \mathrm{sup}_{i \in \mathbb{N}} |x_i - z_i| + \mathrm{sup}_{i \in \mathbb{N}} |z_i - y_i| \\
+          & =    & d(x, z) + d(z, y)
+ \end{array}$
+</center><br />
+
+Thus, the metric on $l^\infty$ satisfies the triangle inequality.

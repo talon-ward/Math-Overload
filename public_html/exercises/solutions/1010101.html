@@ -1,0 +1,16 @@
+The usual metric on $\mathbb{R}$ is $d(x, y) = |x - y|$, for all $x, y \in \mathbb{R}$. We must check that this function $d$ is, in fact, a distance function on $\mathbb{R}$:
+<ul>
+ <li /> If $x = y$, then $|x - y| = 0$. If $d(x, y) = 0$, then $x - y = \pm 0 = 0$, so that $x = y$.
+ <li /> We have<br /><br />
+  <center>$d(x, y) = |x - y| = |-1(y - x)| = |y - x| = d(y, x)$</center><br />
+ <li /> For all $z \in \mathbb{R}$,<br /><br />
+  <center>
+  $\begin{array}{rcl}
+    d(x, y) & =    & |x - y| \\
+            & =    & |x - z + z - y| \\
+            & \leq & |x - z| + |z - y| \\
+            & =    & d(x, z) + d(z, y)
+  \end{array}$
+  </center>
+</ul>
+Since the axioms of a distance function are satisfied by $d$, $(\mathbb{R}, d)$ is a metric space.

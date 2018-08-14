@@ -1,0 +1,51 @@
+   var searchTimer = 0;
+
+   function fixPosition() {
+    var p = getPosition(document.getElementById("q"));
+    document.getElementById("search-output").style.top = (p.y + document.getElementById("q").offsetHeight + window.pageYOffset) + "px";
+    document.getElementById("search-output").style.left = p.x + window.pageXOffset + "px";
+   }
+
+   function getPosition(element) {
+    var xPosition = 0;
+    var yPosition = 0;
+    while(element) {
+     xPosition += (element.offsetLeft - element.scrollLeft + element.clientLeft);
+     yPosition += (element.offsetTop - element.scrollTop + element.clientTop);
+     element = element.offsetParent;
+    }
+    return { x: xPosition, y: yPosition };
+   }
+
+   function showSearch() {
+    if(document.getElementById("q").value == "") {
+     document.getElementById("search-output").innerHTML = "";
+     document.getElementById("search-output").style.border = "0px";
+     document.getElementById("search-output").style.display = "none";
+     return;
+    }
+    if(window.XMLHttpRequest) {
+     xmlhttp = new XMLHttpRequest();
+    } else {
+     xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    xmlhttp.onreadystatechange = function() {
+     if(xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+      document.getElementById("search-output").innerHTML = xmlhttp.responseText;
+      document.getElementById("search-output").style.border = "1px solid black";
+      //document.getElementById("search-output").style.width = Math.round(0.75*document.getElementById("q").offsetWidth) + "px";
+      document.getElementById("search-output").style.width = "400px";
+      document.body.onresize = fixPosition;
+      fixPosition();
+      document.getElementById("search-output").style.display = "block";
+     }
+    };
+    query = "q=" + document.getElementById("q").value + "&t=" + document.getElementById("t").value + "&d=" + document.getElementById("d").value + "&i=" + document.getElementById("i").value;
+    xmlhttp.open("GET", "search.php?" + query, true);
+    xmlhttp.send();
+   }
+
+   function setSearchTimer() {
+    clearTimeout(searchTimer);
+    searchTimer = setTimeout(showSearch, 500);
+   }

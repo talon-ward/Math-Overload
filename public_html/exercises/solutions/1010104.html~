@@ -1,0 +1,5 @@
+For $X = \{x\}$, since $x = x$, we must have $d(x, x) = 0$, so the only metric on $X$ is the zero function. For $X = \{x, y\}$, we must have $d(x, x) = 0$ and $d(y, y) = 0$. Also, we must have $d(x, y) = d(y, x) > 0$, since a distance function must be nonnegative, and $x \neq y$. Thus, all metrics on $X$ take the form<br /><br />
+<center>
+ $d(x, y) = \left\{\begin{array}{ll} 0, & x = y \\ a, & x \neq y \end{array}\right.$
+</center>
+where $a > 0$ is a real number.

@@ -1,0 +1,1 @@
+Use the generalized triangle inequality to show that $|d(x, y) - d(z, w)| \leq d(x, z) + d(y, w)$, for all $x, y, w, z \in X$, where $(X, d)$ is a metric space.

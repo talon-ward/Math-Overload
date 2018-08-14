@@ -1,0 +1,7 @@
+We need to check whether $d(x, y) = (x - y)^2$ satisfies the three conditions of a distance function:
+<ul>
+<li /> If $x = y$, then $(x - y)^2 = 0$. If $(x - y)^2 = 0$, then $x - y = 0$, so that $x = y$.
+<li /> We have $d(x, y) = (x - y)^2 = (y - x)^2 = d(y, x)$.
+<li /> Suppose $x = 1, y = 3, z = 2$. Then, $d(x, y) = 4$, but $d(x, z) + d(z, y) = 1 + 1 = 2$.
+</ul>
+Since the triangle inequality does not hold for the function $d(x, y) = (x - y)^2$, this function is not a metric on $\mathbb{R}$.

@@ -1,0 +1,17 @@
+<?php
+
+// Functions:
+// addQuestion($conceptID, $noteID, $prereqIDs, $courseIDs, $question, $answer, $wrongAnswers) - adds question to database, updating multiple tables at once.
+
+// includes
+require_once('utility.php');
+require_once('databaseConnection.php');
+
+
+
+// function: adds question to database, updating multiple tables at once.
+function addQuestion($conceptID, $noteID, $prereqIDs, $courseIDs, $question, $answer, $wrongAnswers) {
+ global $dbConnection;
+}
+
+?>

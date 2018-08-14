@@ -1,0 +1,17 @@
+We must check whether $d(x, y) = \int_a^b |x(t) - y(t)| \, dt$ satisfies the three conditions of a distance function:
+<ul>
+ <li /> If $x = y$, then $x(t) - y(t) = 0$, for all $t \in [a, b]$, then $\int_a^b |x(t) - y(t)| \, dt = 0$. If $\int_a^b |x(t) - y(t)| \, dt = 0$, since the integrand is nonnegative, the integrand must be identically zero. Thus, $x(t) = y(t)$, for all $t \in [a, b]$; that is, $x = y$.
+ <li /> Since $|x(t) - y(t)| = |y(t) - x(t)|$ for each $t \in [a, b]$, we have<br /><br />
+  <center>$d(x, y) = \int_a^b |x(t) - y(t)| \, dt = \int_a^b |y(t) - x(t)| \, dt = d(y, x)$</center><br />
+ <li /> By the linearity of the integral operator, for each $z \in C[a, b]$, we have<br /><br />
+  <center>
+  $\begin{array}{rcl}
+    d(x, y) & =    & \int_a^b |x(t) - y(t)| \, dt \\
+            & =    & \int_a^b |x(t) - z(t) + z(t) - y(t)| \, dt \\
+            & \leq & \int_a^b |x(t) - z(t)| + |z(t) - y(t)| \, dt \\
+            & =    & \int_a^b |x(t) - z(t)| \, dt + \int_a^b |z(t) - y(t)| \, dt \\
+            & =    & d(x, z) + d(z, y)
+   \end{array}$
+  </center>
+</ul>
+Since all three conditions are satisfied, $d$ is a metric on $C[a, b]$.

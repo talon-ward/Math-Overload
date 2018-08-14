@@ -1,0 +1,11 @@
+Let $X$ be any set, $x, y, z \in X$, and $d$ be the discrete metric on $X$, which is<br /><br />
+
+<center>$d(x, y) = \left\{ \begin{array}{ll} 0, & x = y \\ 1, & x \neq y \end{array} \right.$</center><br />
+
+We must verify that $d$ satisfies the three conditions of a metric:
+<ul>
+ <li /> By definition, $d(x, y) = 0$ if and only if $x = y$.
+ <li /> If $x = y$, then $d(x, y) = d(y, x)$ trivially. $If $x \neq y$, then $d(x, y) = 1 = d(y, x)$.
+ <li /> If $z = x$ or $z = y$, the triangle inequality is trivial, since it reduces to $d(x, y) \leq d(x, y)$. If $z \neq x$ and $z \neq y$, then $d(x, z) = 1 = d(z, y)$. Since $d(x, y)$ is either $0$ or $1$, we have $d(x, y) < 2 = d(x, z) + d(z, y)$.
+</ul>
+Therefore, the discrete metric is indeed a metric on any set.

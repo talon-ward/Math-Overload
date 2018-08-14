@@ -1,0 +1,7 @@
+To verify that $d$ is a metric on $A$, we must show that $d$ satisfies the three conditions of a metric. Let $x, y, z \in A$. Then,
+<ul>
+ <li /> If $x = (0, 0, 0)$, then $\lVert x \rVert_0 = 0$. If $\lVert x \rVert_0 = 0$, then $x$ has zero nonzero components, i.e., every component is zero, so that $x = 0$.
+ <li /> Since $x - y = -(y - x)$ and a negation does not change whether or not a component is nonzero, we have $\lVert x - y \rVert_0 = \lVert y - x \rVert_0$.
+ <li /> Each component of $x$ is either equal to the same component of $y$ or not equal to it. If they are equal, the component contributes $0$ toward the sum $\lVert x - y \rVert_0$, so that the same component in $z$ contributes either $0$ or $1$ toward each sum $\lVert x - z \rVert_0$, $\lVert z - y \rVert_0$. If they are not equal, then the same component in $z$ must be equal to either the component in $x$ or the component in $y$, so that a $1$ is contributed to both sums $\lVert x - y \rVert_0$ and $\lVert x - z \rVert_0 + \lVert z - y \rVert_0$. Since each component's contribution to the sum on the left side of $\lVert x - x \rVert_0 \leq \lVert x - z \rVert_0 + \lVert z - y \rVert_0$ is less than or equal to the corresponding component's contribution on the right side of the inequality, the inequality holds.
+</ul>
+Thus, $d(x, y) = \lVert x - y \rVert_0$ is a metric on $A$.

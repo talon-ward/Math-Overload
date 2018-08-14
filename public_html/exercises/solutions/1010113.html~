@@ -1,0 +1,10 @@
+The triangle inequality states that $d(x, y) \leq d(x, z) + d(z, y)$, for all $x, y, z \in X$. By rearranging the order of $x$, $y$, and $z$, we have $d(x, z) \leq d(x, y) + d(y, z)$, which implies that<br /><br />
+
+<center>$d(x, z) - d(y, z) \leq d(x, y)$</center><br />
+
+A different arrangement yields $d(y, z) \leq d(y, x) + d(x, z)$, which implies<br /><br />
+
+<center>$-(d(x, z) - d(y, z) \leq d(x, y)$</center><br />
+
+From these two equations, we conclude that<br /><br />
+<center>$|d(x, z) - d(y, z)| \leq d(x, y)$</center><br />

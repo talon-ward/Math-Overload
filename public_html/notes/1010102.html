@@ -1,0 +1,17 @@
+A <i>metric space</i> is a pair $(X, d)$, where $X$ is a set, and $d : X \rightarrow \mathbb{R}$ is a distance function on $X$. We often refer to the set $X$ as a metric space when the distance function is known, implied, or inconsequential.<br /><br />
+
+If $Y \subseteq X$ is a subset and $\tilde{d} = d|Y$ is the restriction of $d$ to $Y$, then the metric space $(Y, \tilde{d})$ is called a <i>subspace</i> of $(X, d)$ (or simply $Y$ is a subspace of $X$). The restriction $\tilde{d}$ is called the metric <i>induced</i> on the subset $Y$ by the metric $d$.<br /><br />
+
+Some examples of metric spaces include:
+<ul>
+<li /> The real number line $\mathbb{R}$ together with the metric $d(x, y) = |x - y|$, for all $x, y \in \mathbb{R}$.
+<li /> The real number plane $\mathbb{R}^2$ together with the metric $d(x, y) = \sqrt{(x_1 - y_1)^2 + (x_2 - y_2)^2}$, where $x = (x_1, x_2)$ and $y = (y_1, y_2)$, for all $x, y \in \mathbb{R}^2$. This metric is called the <i>standard metric</i> or <i>Euclidean metric</i> on $\mathbb{R}^2$ (and generalizes to $\mathbb{R}^n$).
+<li /> The real number plane $\mathbb{R}^2$ together with the metric $d(x, y) = |x_1 - y_1| + |x_2 - y_2|$, where $x = (x_1, x_2)$ and $y = (y_1, y_2)$, for all $x, y \in \mathbb{R}^2$. This metric is called the <i>taxicab metric</i>.
+<li /> The set $l^\infty$ of all bounded sequences of complex numbers together with the metric $d(x, y) = \mathrm{sup}_{i \in \mathbb{N}} |x_i - y_i|$, where $x = (x_1, x_2, \ldots)$ and $y = (y_1, y_2, \ldots)$, for all $x, y \in l^\infty$. This is an example of a <i>sequence space</i>, a metric space whose elements are sequences.
+<li /> The set $C[a, b]$ of all continuous real-valued functions defined on the closed interval $[a, b] \subseteq \mathbb{R}$ together with the metric $d(x, y) = \mathrm{max}_{t \in [a, b]} |x(t) - y(t)|$, for all $x, y \in C[a, b]$. This is an example of a <i>function space</i>, a metric space whose elements are functions.
+<li /> Any set $X$ together with the metric<br />
+<center>
+$d(x, y) = \left\{\begin{array}{ll} 0, & x = y \\ 1, & x \neq y \end{array}\right.$
+</center>
+This is called the <i>discrete metric</i> or the <i>trivial metric</i> on $X$.
+</ul>

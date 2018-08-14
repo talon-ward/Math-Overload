@@ -1,0 +1,34 @@
+<?php
+
+// MathJax latex configuration
+echo "<script type=\"text/x-mathjax-config\">\n" .
+     " MathJax.Hub.Config({\n" .
+     "  extensions: [\"tex2jax.js\"],\n" .
+     "  jax: [\"input/TeX\", \"output/HTML-CSS\"],\n" .
+     "  tex2jax: {\n" .
+     "   inlineMath: [ ['$','$'], [\"\\\\(\",\"\\\\)\"] ],\n" .
+     "   displayMath: [ ['$$','$$'], [\"\\\\[\",\"\\\\]\"] ],\n" .
+     "   processEscapes: true\n" .
+     "  },\n" .
+     "  \"HTML-CSS\": { availableFonts: [\"TeX\"] },\n" .
+     "  TeX: {\n" .
+     "   extensions: [\"AMSmath.js\"]\n" .
+     "  }\n" .
+     " });\n" .
+     "</script>\n" .
+     "<script type=\"text/javascript\" src=\"http://cdn.mathjax.org/mathjax/latest/MathJax.js\"></script>\n";
+
+// Window (note) popup function
+echo "<script type=\"text/javascript\">\n" .
+     "<!--\n" .
+     " function notePopup(myURL) {\n" .
+     "  height = 525;\n" .
+     "  width = 700;\n" .
+     "  left = (screen.width - width)/2;\n" .
+     "  top = (screen.height - height)/2;\n" .
+     "  window.open(myURL, 'note', 'height='+height+',left='+left+',location=no,menubar=no,status=no,toolbar=no,top='+top+',width='+width);\n" .
+     " }\n" .
+     "//-->\n" .
+     "</script>\n";
+
+?>

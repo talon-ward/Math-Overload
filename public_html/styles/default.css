@@ -1,0 +1,293 @@
+.about-section { font-weight: bold;
+                 padding-top: 16px }
+
+.about-text { margin-left: auto;
+              margin-right: auto;
+              padding: 16px;
+              text-align: left;
+              width: 568px }
+
+.about-tip { font-size: 10pt }
+
+.admin { border: 1px solid black;
+         font-family: mono;
+         font-size: 10pt;
+         margin-left: auto;
+         margin-right: auto;
+         padding: 16px;
+         text-align: left;
+         width: 568px }
+
+body { background-color: white;
+       color: black;
+       font-family: Verdana, Arial, sans-serif;
+       text-align: center }
+
+.centered { margin-left: auto;
+            margin-right: auto;
+            padding: 16px;
+            text-align: center;
+            width: 568px }
+
+.collapse-list-container { text-align: left }
+
+.course-selector { margin-left: auto;
+                   margin-right: auto;
+                   padding: 16px;
+                   width: 568px }
+
+.course-selector table { margin-left: auto;
+                         margin-right: auto;
+                         padding: 8px }
+
+.course-selector table td { color: black;
+                            text-align: left }
+
+.course-selector table td.checkbox { vertical-align: top;
+                                     width: 1px }
+
+.course-selector table td.save { text-align: center }
+
+.exercise { margin: 0 auto;
+            padding: 16px;
+            text-align: left;
+            width: 568px }
+
+.exercise-description { padding-left: 8px;
+                        text-align: left }
+
+.exercise-view { font-size: 12px }
+
+.home-logo { background-image: url('../images/logo.png');
+             background-repeat: no-repeat;
+             cursor: default;
+             display: block;
+             height: 119px !important;
+             margin: 0 auto 20px auto;
+             width: 261px !important }
+
+.home-menu { display: block;
+             padding-top: 10px }
+
+.home-menu a { color: black;
+               text-decoration: none }
+
+.home-menu a:hover { text-decoration: underline }
+
+.home-search form { display: block;
+                    margin: 0 auto;
+                    position: relative;
+                    width: 425px; }
+
+.home-search input { border: 1px solid #adadad;
+                     color: black;
+                     font-size: 20px;
+                     margin: 0;
+                     outline: 0;
+                     padding: 3px;
+                     width: 100%;
+                     -moz-box-shadow: 0 1px 5px black;
+                     -o-box-shadow: 0 1px 5px black;
+                     -webkit-border-radius: 3px;
+                     -webkit-box-shadow: 0 1px 5px black }
+
+.home-wrapper { min-width: 640px;
+                padding-top: 25px;
+                text-align: center }
+
+.home-wrapper .footer { border: 0 }
+
+.footer { border-top: 1px solid black;
+          color: #888888;
+          font-size: 9px;
+          margin-left: auto;
+          margin-right: auto;
+          width: 568px;
+          padding: 10px }
+
+.linklist a { color: #7799aa;
+              margin: 0.8em;
+              text-decoration: none }
+
+.linklist a:hover,
+.linklist a.open { color: #bbccdd;
+                   text-decoration: underline }
+
+.linklist .username {color: #888888 !important;
+                     margin: 0 !important}
+
+.long-text { text-align: left }
+
+.page-header { background-color: #eeeeee;
+               border-bottom: 1px solid black;
+               min-width: 700px;
+               padding: 0 8px 0 8px }
+
+.page-header a { color: black;
+                 text-decoration: none }
+
+.page-header a:hover { text-decoration: underline }
+
+.page-header table { width: 100% }
+
+.page-header table td { vertical-align: middle }
+
+.page-logo { display: inline;
+             float: left;
+             height: 50px !important;
+             margin: 0 auto 0 auto;
+             width: 119px !important }
+
+.page-search form { display: inline;
+                    margin: 0 auto }
+
+.page-search input { border: 1px solid #adadad;
+                     color: black;
+                     float: right;
+                     font-size: 11px;
+                     height: 15px;
+                     margin: 0;
+                     outline: 0;
+                     padding: 3px;
+                     width: 120px;
+                     -moz-box-shadow: 0 1px 5px black;
+                     -o-box-shadow: 0 1px 5px black;
+                     -webkit-border-radius: 3px;
+                     -webkit-box-shadow: 0 1px 5px black }
+
+.page-wrapper { margin: 0 auto;
+                min-width: 700px;
+                padding-top: 25px;
+                width: 50% }
+
+.page-wrapper a { color: black;
+                  text-decoration: none }
+
+.page-wrapper a:hover { text-decoration: underline }
+
+.page-wrapper table { margin: 0 auto }
+
+.progress-header { font-weight: bold }
+
+.progress-tracker { margin-left: auto;
+                    margin-right: auto;
+                    padding: 16px;
+                    width: 568px }
+
+.progress-tracker table { background-color: #ffffff;
+                          margin-left: auto;
+                          margin-right: auto;
+                          padding: 8px }
+
+.progress-tracker table td { text-align: left }
+
+.prompt { text-align: right }
+
+.register { display: none;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 16px;
+            width: 568px }
+
+.register-hide { display: none }
+
+.register table { margin-left: auto;
+                  margin-right: auto }
+
+
+.expand-click { font-size: 10pt;
+                margin-left: auto;
+                margin-right: auto;
+                padding: 16px;
+                width: 350px }
+
+.expand-click a { color: black;
+                  text-decoration: none }
+
+.expand-click a:hover { text-decoration: underline }
+
+.search-box { background-color: #eeeeee;
+              border: 1px solid black;
+              display: none;
+              float: center;
+              font-size: 10pt;
+              opacity: 0.95;
+              overflow: hidden;
+              padding: 4px;
+              position: absolute;
+              text-align: left;
+              width: 400px;
+              z-index: 2 }
+
+.search-box a { color: black;
+                text-decoration: none }
+
+.search-box a:hover { font-weight: 900; 
+                      text-decoration: none}
+
+.search-item { width: 100% }
+
+.sign-in { margin-left: auto;
+           margin-right: auto;
+           padding: 16px;
+           width: 568px }
+
+.sign-in table { margin-left: auto;
+                 margin-right: auto }
+
+#solution-div { border-top: 1px solid black }
+
+.study-answer { display: none;
+                margin-left: auto;
+                margin-right: auto;
+                padding: 16px;
+                width: 568px }
+
+.study-answer table { margin-left: auto;
+                      margin-right: auto;
+                      text-align: left }
+
+#interrupt { border-bottom: 1px solid black;
+             font-size: 12pt;
+             margin-left: auto;
+             margin-right: auto;
+             padding: 16px;
+             width: 568px }
+
+.study-question { font-size: 16pt;
+                  margin-left: auto;
+                  margin-right: auto;
+                  padding: 16px;
+                  text-align: left;
+                  width: 568px }
+
+.study-review { border-top: 1px solid black;
+                font-size: 12pt;
+                margin-left: auto;
+                margin-right: auto;
+                padding: 16px;
+                text-align: left;
+                width: 568px }
+
+.tooltip { background-color: #eeeeee;
+           border: 1px solid black;
+           display: none;
+           left: 385px;
+           padding: 4px;
+           position: absolute;
+           top: 188px;
+           width: 300px;
+           z-index: 1 }
+
+.toplinks { color: #888888;
+            float: right;
+            font-size: 13px;
+            height: 30px;
+            line-height: 30px;
+            overflow: hidden }
+
+.view-note { padding: 16px;
+             margin-left: auto;
+             margin-right: auto;
+             text-align: left;
+             width: 568px }

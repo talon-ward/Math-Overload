@@ -1,0 +1,17 @@
+A <i>distance function</i> or <i>metric</i> on a set $X$ is a function $d : X \rightarrow \mathbb{R}$ that satisfies the following three conditions:
+<ul>
+<li /> $d(x, y) = 0$ if and only if $x = y$, for all $x, y \in X$.
+<li /> $d(x, y) = d(y, x)$, for all $x, y \in X$.
+<li /> $d(x, y) \leq d(x, z) + d(z, y)$, for all $x, y, z \in X$.
+</ul>
+
+These properties formalize some basic intuitive notions about distance:
+<ul>
+<li /> No two objects can occupy the same spot (if their distance is zero, they are equal), and no object can be in two places at once (if they are equal, their distance is zero).
+<li /> The distance from $A$ to $B$ is the same as the distance from $B$ to $A$.
+<li /> The distance between two objects is along the shortest path; going to another object first can only either maintain the same distance or increase it.
+</ul>
+
+The statement $d(x, y) \leq d(x, z) + d(z, y)$, for all $x, y, z \in X$, is called the <i>triangle inequality</i>. This inequality generalizes by induction to $d(x_1, x_n) \leq d(x_1, x_2) + d(x_2, x_3) + \cdots + d(x_{n-1}, x_n)$, for each $x_i \in X$, which is called the <i>generalized triangle inequality</i>.<br /><br />
+
+Notice that, by applying the three conditions of a distance function, we have $0 = d(x, x) \leq d(x, y) + d(y, x) = 2d(x, y)$, for all $x, y \in X$, which implies that $d(x, y) \geq 0$, for all $x, y \in X$. That is, a distance function assumes only nonnegative real values.

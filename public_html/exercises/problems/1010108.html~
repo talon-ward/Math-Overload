@@ -1,0 +1,1 @@
+Let $d : C[a, b] \times C[a, b] \rightarrow \mathbb{R}$ be defined by $d(x, y) = \int_a^b |x(t) - y(t)| \, dt$. Is $d$ a metric on $C[a, b]$? If so, prove it; otherwise, show why it fails to be a metric.

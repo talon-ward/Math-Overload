@@ -1,0 +1,5 @@
+<?php
+
+echo " A <i>binary relation</i> \$R\$ on a set \$A\$ is a collection of ordered pairs \$(a, b)\$ of elements of \$A\$. That is, \$R \\subseteq A \\times A\$.";
+
+?>

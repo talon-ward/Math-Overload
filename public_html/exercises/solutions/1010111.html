@@ -1,0 +1,19 @@
+The generalized triangle inquality states that<br /><br />
+
+<center>$d(x_1, x_n) \leq d(x_1, x_2) + d(x_2, x_3) + \cdots + d(x_{n-1}, x_n)$</center><br />
+
+for each $x_i \in X$, where $(X, d)$ is a metric space. We proceed by induction.<br /><br />
+
+The triangle inequality is the case $n = 3$. Suppose the generalized triangle inequality holds for some value $k$. For $n = k + 1$, by the triangle inequality, we have<br /><br />
+
+<center>$d(x_1, x_{k+1}) \leq d(x_1, x_k) + d(x_k, x_{k+1})$</center><br />
+
+Since the generalized triangle inequality holds for $n = k$,<br /><br />
+
+<center>$d(x_1, x_k) \leq d(x_1, x_2) + d(x_2, x_3) + \cdots + d(x_{k-1}, x_k)$</center><br />
+
+so that<br /> <br />
+
+<center>$d(x_1, x_{k+1}) \leq d(x_1, x_2) + \cdots + d(x_{k-1}, x_k) + d(x_k, x_{k+1})$</center><br />
+
+Therefore, by induction, the generalized triangle inequality holds for all $n \geq 3$.
